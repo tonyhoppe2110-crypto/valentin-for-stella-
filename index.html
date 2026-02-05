@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff758f, #ffb3c6);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #d62828;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #6d6875;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .dog-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    img {
+      width: 220px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: filter 0.5s ease;
+    }
+
+    img.sad {
+      filter: grayscale(100%) brightness(0.8);
+    }
+
+    .sad-text {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 14px;
+      color: #6a040f;
+    }
+
+    .sad-text.show {
+      display: block;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background-color: #b5838d;
+      color: white;
+      position: absolute;
+    }
+
+    button:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    #response {
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #6a040f;
+    }
+
+    .heart {
+      position: fixed;
+      color: #ff4d6d;
+      font-size: 24px;
+      animation: float 3s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c4bfcf8b4.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <h1>Stella, do you want to be my Valentine? 💖</h1>
+    
+
+    <div class="dog-wrapper">
+      <img id="dog" src="29376.jpg" alt="Süßer Dackel">
+      <div id="sadText" class="sad-text">Der Dackel ist jetzt traurig 🥺</div>
+    </div>
+
+    <div>
+      <button class="yes" onclick="yesAnswer()">Ja 💕</button>
+      <button class="no" id="noBtn">Nein 🙈</button>
+    </div>
+
+    <div id="response"></div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const music = document.getElementById('music');
+    const dog = document.getElementById('dog');
+    const sadText = document.getElementById('sadText');
+
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 120);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+
+      dog.classList.add('sad');
+      sadText.classList.add('show');
+    });
+
+    function yesAnswer() {
+      document.getElementById('response').innerText = 'Jaaa! 💞 Du hast gerade ein Herz (und einen Dackel) sehr glücklich gemacht.';
+      music.play();
+      dog.classList.remove('sad');
+      sadText.classList.remove('show');
+      createHearts();
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.bottom = '-20px';
+        heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
